@@ -9,12 +9,57 @@
       name="description"
       content="Web site created using create-react-app"
     />
+    <style>
+  html,body {
+	margin: 0;
+	padding: 0;
+}
+.slider {
+	width: 1024px;
+	margin: 2em auto;
+	
+}
+
+.slider-wrapper {
+	width: 100%;
+	height: 400px;
+	position: relative;
+}
+
+.slide {
+	float: left;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	transition: opacity 3s linear;
+}
+
+.slider-wrapper > .slide:first-child {
+	opacity: 1;
+}
+</style>
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/line-icons.css">
+    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets/css/owl.theme.default.css">
+    <link rel="stylesheet" href="/assets/css/slicknav.min.css">
+    <link rel="stylesheet" href="/assets/css/animate.css">
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/responsive.css">
+    <link rel="stylesheet" href="/assets/css/colors/purple.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
+   
+<style>
+</style>
+
+    
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -39,5 +84,86 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+   
+        <script src="/assets/js/jquery-min.js"></script>
+    <script src="/assets/js/popper.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <!-- <script src="assets/js/color-switcher.js"></script> -->
+    <script src="/assets/js/owl.carousel.min.js"></script>
+    <script src="/assets/js/jquery.slicknav.js"></script>
+    <script src="/assets/js/jquery.counterup.min.js"></script>
+    <script src="/assets/js/waypoints.min.js"></script>
+    <script src="/assets/js/form-validator.min.js"></script>
+    <script src="/assets/js/contact-form-script.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <script>
+(function() {
+	
+	function Slideshow( element ) {
+		this.el = document.querySelector( element );
+		this.init();
+	}
+	
+	Slideshow.prototype = {
+		init: function() {
+			this.wrapper = this.el.querySelector( ".slider-wrapper" );
+			this.slides = this.el.querySelectorAll( ".slide" );
+			this.previous = this.el.querySelector( ".slider-previous" );
+			this.next = this.el.querySelector( ".slider-next" );
+			this.index = 0;
+			this.total = this.slides.length;
+			this.timer = null;
+			
+			this.action();
+			this.stopStart();	
+		},
+		_slideTo: function( slide ) {
+			var currentSlide = this.slides[slide];
+			currentSlide.style.opacity = 1;
+			
+			for( var i = 0; i < this.slides.length; i++ ) {
+				var slide = this.slides[i];
+				if( slide !== currentSlide ) {
+					slide.style.opacity = 0;
+				}
+			}
+		},
+		action: function() {
+			var self = this;
+			self.timer = setInterval(function() {
+				self.index++;
+				if( self.index == self.slides.length ) {
+					self.index = 0;
+				}
+				self._slideTo( self.index );
+				
+			}, 3000);
+		},
+		stopStart: function() {
+			var self = this;
+			self.el.addEventListener( "mouseover", function() {
+				clearInterval( self.timer );
+				self.timer = null;
+				
+			}, false);
+			self.el.addEventListener( "mouseout", function() {
+				self.action();
+				
+			}, false);
+		}
+		
+		
+	};
+	
+	document.addEventListener( "DOMContentLoaded", function() {
+		
+		var slider = new Slideshow( "#main-slider" );
+		
+	});
+	
+	
+})();
+</script>
+
   </body>
 </html>
